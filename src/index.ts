@@ -13,9 +13,22 @@ import HashService from "./services/HashService.js";
 /* Import Routers */
 import AccountsRouter from './routes/accounts.js';
 
+import swagger from '@fastify/swagger';
+
 var app: FastifyApp = fastify();
 
 app.register(helmet);
+
+app.register(swagger, {
+    routePrefix: '/swagger',
+    swagger: {
+        host: 'localhost',
+        schemes: ['http'],
+        consumes: ['application/json'],
+        produces: ['application/json'],
+    },
+    exposeRoute: true,
+})
 
 app.register(AccountsRouter, { prefix: '/accounts' });
 

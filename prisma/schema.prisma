@@ -17,7 +17,7 @@ model Account {
   email String @unique
   phone String
   password String
-  birthdy DateTime
+  birthday DateTime
   created_at DateTime
   modified_at DateTime
 }
