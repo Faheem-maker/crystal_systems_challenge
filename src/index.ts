@@ -14,10 +14,9 @@ import HashService from "./services/HashService.js";
 import AccountsRouter from './routes/accounts.js';
 
 import swagger from '@fastify/swagger';
+import swaggerUI from '@fastify/swagger-ui';
 
 var app: FastifyApp = fastify();
-
-app.register(helmet);
 
 app.register(swagger, {
     routePrefix: '/swagger',
@@ -28,7 +27,14 @@ app.register(swagger, {
         produces: ['application/json'],
     },
     exposeRoute: true,
+});
+
+app.register(swaggerUI, {
+    routePrefix: '/swagger',
+    exposeRoute: true
 })
+
+app.register(helmet);
 
 app.register(AccountsRouter, { prefix: '/accounts' });
 
@@ -50,6 +56,8 @@ app.get('/', DemoResponse, async function home() {
 
 try {
     await app.listen({ port: 8000 });
+
+    app.swagger();
     console.log("Server successfully started on http://localhost:8000");
 }
 catch (err) {
